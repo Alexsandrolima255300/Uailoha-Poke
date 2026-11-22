@@ -13,3 +13,22 @@
   .site-header .brand-logo{max-width:145px!important;max-height:43px!important}
   .site-footer .footer-logo{max-width:135px!important;max-height:39px!important}
 }
+
+
+/* Cardápio demonstrativo */
+.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:980px;margin:0 auto}
+.menu-card{background:#fff;border:1px solid #e9eff1;border-radius:16px;overflow:hidden;box-shadow:0 8px 26px #1733420b;transition:transform .22s,box-shadow .22s}
+.menu-card:hover{transform:translateY(-5px);box-shadow:0 15px 32px #17334216}
+.menu-photo{height:230px;position:relative;overflow:hidden;background:#eaf7fc}
+.menu-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.menu-card:hover .menu-photo img{transform:scale(1.04)}
+.menu-tag{position:absolute;top:15px;left:15px;background:var(--blue);color:#fff;padding:8px 12px;border-radius:30px;font-size:8px;font-weight:700;letter-spacing:1px}
+.menu-tag.tag-orange{background:var(--orange)}
+.menu-info{padding:20px 21px 17px}
+.menu-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.menu-title-row h3{font:600 23px var(--fredoka);margin:0;color:var(--ink)}
+.menu-title-row strong{font:700 17px var(--fredoka);color:var(--orange);white-space:nowrap}
+.menu-info>p{font-size:10px;line-height:1.9;color:var(--muted);margin:11px 0 16px;min-height:38px}
+.menu-meta{border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;gap:10px;color:#829198;font-size:9px;font-weight:600}
+.menu-disclaimer{max-width:720px;margin:24px auto 0;padding:12px 16px;border:1px dashed #cbdfe8;border-radius:9px;line-height:1.7}
+@media(max-width:650px){.menu-grid{grid-template-columns:1fr;gap:16px}.menu-photo{height:210px}.menu-info{padding:17px}.menu-title-row h3{font-size:21px}.menu-title-row strong{font-size:16px}.menu-info>p{min-height:0}.menu-disclaimer{font-size:8px;margin-top:18px}}
