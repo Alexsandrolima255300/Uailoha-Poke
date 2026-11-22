@@ -18,25 +18,25 @@ navigation?.querySelectorAll("a").forEach((link) => {
 document.querySelector("#year").textContent = new Date().getFullYear();
 /* Fluxo de personalização, cálculo e sacola — valores e calorias demonstrativos */
 const pokeCatalog = [
- {name:"Havaí Clássico",price:32.90,image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=85",description:"Uma combinação clássica, fresca e equilibrada.",groups:[
+ {name:"Havaí Clássico",price:32.90,image:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=720&q=72",description:"Uma combinação clássica, fresca e equilibrada.",groups:[
   {title:"Base",required:true,items:[["Arroz japonês",0,205,true],["Mix de folhas",0,25,false],["Arroz integral",2,190,false]]},
   {title:"Proteína",required:true,items:[["Salmão",0,180,true],["Atum",0,145,false],["Tofu grelhado",0,120,false]]},
   {title:"Acompanhamentos",items:[["Manga",0,50,true],["Pepino",0,12,true],["Cenoura",0,18,true],["Cream cheese",2,95,true],["Abacate",3,80,false],["Edamame",2,65,false]]},
   {title:"Molhos e finalização",items:[["Molho da casa",0,45,true],["Tarê",0,35,false],["Gergelim",0,18,false],["Crocante",2,75,false]]}
  ]},
- {name:"Salmão Tropical",price:39.90,image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",description:"Salmão e ingredientes tropicais em uma mistura especial.",groups:[
+ {name:"Salmão Tropical",price:39.90,image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=720&q=72",description:"Salmão e ingredientes tropicais em uma mistura especial.",groups:[
   {title:"Base",required:true,items:[["Arroz japonês",0,205,true],["Mix de folhas",0,25,false],["Arroz integral",2,190,false]]},
   {title:"Proteína",required:true,items:[["Salmão",0,180,true],["Atum",0,145,false],["Tofu grelhado",0,120,false]]},
   {title:"Acompanhamentos",items:[["Abacate",0,80,true],["Manga",0,50,true],["Edamame",0,65,true],["Pepino",0,12,false],["Cebola roxa",0,10,false],["Cream cheese",2,95,false]]},
   {title:"Molhos e finalização",items:[["Tarê",0,35,true],["Molho da casa",0,45,false],["Gergelim",0,18,true],["Crocante",2,75,false]]}
  ]},
- {name:"Crispy Chicken",price:34.90,image:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=85",description:"Frango crocante com vegetais e molho especial.",groups:[
+ {name:"Crispy Chicken",price:34.90,image:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=720&q=72",description:"Frango crocante com vegetais e molho especial.",groups:[
   {title:"Base",required:true,items:[["Arroz japonês",0,205,true],["Mix de folhas",0,25,false],["Arroz integral",2,190,false]]},
   {title:"Proteína",required:true,items:[["Frango crocante",0,260,true],["Frango grelhado",0,190,false],["Tofu grelhado",0,120,false]]},
   {title:"Acompanhamentos",items:[["Pepino",0,12,true],["Cenoura",0,18,true],["Repolho roxo",0,15,true],["Manga",0,50,false],["Cream cheese",2,95,false],["Edamame",2,65,false]]},
   {title:"Molhos e finalização",items:[["Molho especial",0,55,true],["Tarê",0,35,false],["Gergelim",0,18,false],["Crocante extra",2,75,false]]}
  ]},
- {name:"Veggie Fresh",price:29.90,image:"https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=900&q=85",description:"Uma opção vegetal, leve e cheia de cores.",groups:[
+ {name:"Veggie Fresh",price:29.90,image:"https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=720&q=72",description:"Uma opção vegetal, leve e cheia de cores.",groups:[
   {title:"Base",required:true,items:[["Arroz japonês",0,205,true],["Mix de folhas",0,25,false],["Arroz integral",2,190,false]]},
   {title:"Proteína",required:true,items:[["Tofu grelhado",0,120,true],["Edamame",0,65,false],["Grão-de-bico",0,135,false]]},
   {title:"Acompanhamentos",items:[["Manga",0,50,true],["Abacate",0,80,true],["Pepino",0,12,true],["Cenoura",0,18,true],["Edamame",0,65,false],["Repolho roxo",0,15,false]]},
