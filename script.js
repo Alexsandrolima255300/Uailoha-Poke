@@ -62,4 +62,4 @@ function openBag(){bagOverlay.classList.add("open");bagOverlay.setAttribute("ari
 function closeBag(){bagOverlay.classList.remove("open");bagOverlay.setAttribute("aria-hidden","true");if(!customizer.classList.contains("open"))document.body.classList.remove("modal-open");}
 document.querySelector("#open-bag").addEventListener("click",openBag);document.querySelector("#close-bag").addEventListener("click",closeBag);bagOverlay.addEventListener("click",e=>{if(e.target===bagOverlay)closeBag();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCustomizer();closeBag();}});
-document.querySelector("#checkout-button").addEventListener("click",()=>{alert("A sacola está funcionando! A finalização de pedidos será ativada quando a Uailoha definir o canal de recebimento dos pedidos.");});
+document.querySelector("#checkout-button").addEventListener("click",()=>{closeBag();document.querySelector("#monte").scrollIntoView({behavior:"smooth",block:"start"});});
