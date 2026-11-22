@@ -253,3 +253,20 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
     right:-48px;
   }
 }
+
+
+/* Textos entram suavemente conforme cada seção aparece na tela */
+.scroll-reveal{
+  opacity:0;
+  transform:translate3d(0,24px,0);
+  transition:opacity .72s ease,transform .72s cubic-bezier(.2,.7,.2,1);
+  transition-delay:var(--reveal-delay,0ms);
+  will-change:opacity,transform;
+}
+.scroll-reveal.is-visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+@media(prefers-reduced-motion:reduce){
+  .scroll-reveal{opacity:1;transform:none;transition:none;will-change:auto}
+}
