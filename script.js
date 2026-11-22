@@ -182,3 +182,27 @@ document.querySelector("#finalize-order").addEventListener("click",()=>{
 });
 document.querySelector("#finalize-note").textContent="O pedido será encaminhado temporariamente para o WhatsApp (34) 99140-1087. Confira e toque em Enviar no WhatsApp.";
 renderCheckoutSummary();
+
+
+/* Revela títulos e textos à medida que a pessoa percorre a página */
+(function initScrollTextReveal(){
+  const revealTargets=document.querySelectorAll(
+    "main h1, main h2, main h3, main p, main .eyebrow, main .hero-note, main .menu-meta, main .trust-facts span, main .review-grid blockquote, main .faq-list summary"
+  );
+  if(!("IntersectionObserver" in window)){
+    revealTargets.forEach(element=>element.classList.add("is-visible"));
+    return;
+  }
+  const observer=new IntersectionObserver((entries,currentObserver)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      entry.target.classList.add("is-visible");
+      currentObserver.unobserve(entry.target);
+    });
+  },{threshold:0.12,rootMargin:"0px 0px -35px 0px"});
+  revealTargets.forEach((element,index)=>{
+    element.classList.add("scroll-reveal");
+    element.style.setProperty("--reveal-delay",(index%4)*85+"ms");
+    observer.observe(element);
+  });
+})();
