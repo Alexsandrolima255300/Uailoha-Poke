@@ -32,3 +32,30 @@
 .menu-meta{border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;gap:10px;color:#829198;font-size:9px;font-weight:600}
 .menu-disclaimer{max-width:720px;margin:24px auto 0;padding:12px 16px;border:1px dashed #cbdfe8;border-radius:9px;line-height:1.7}
 @media(max-width:650px){.menu-grid{grid-template-columns:1fr;gap:16px}.menu-photo{height:210px}.menu-info{padding:17px}.menu-title-row h3{font-size:21px}.menu-title-row strong{font-size:16px}.menu-info>p{min-height:0}.menu-disclaimer{font-size:8px;margin-top:18px}}
+
+/* Personalização do poke e sacola */
+.bag-button{border:0;background:#e7f6fc;color:var(--ink);border-radius:30px;padding:11px 15px;font:600 11px var(--poppins);cursor:pointer;display:flex;align-items:center;gap:8px}
+.bag-button b{background:var(--orange);color:#fff;border-radius:50%;min-width:20px;height:20px;display:grid;place-items:center;font-size:10px}
+.menu-card{cursor:pointer}.menu-card:focus-within{outline:2px solid var(--blue)}
+.ui-overlay,.bag-overlay{position:fixed;inset:0;background:#10232dcc;z-index:30;display:none;align-items:center;justify-content:center;padding:22px}
+.ui-overlay.open,.bag-overlay.open{display:flex}
+.customizer-panel{position:relative;background:#fffdfc;width:min(960px,100%);max-height:92vh;overflow:auto;border-radius:20px;display:grid;grid-template-columns:.85fr 1.15fr;box-shadow:0 25px 80px #07192355}
+.customizer-image{min-height:100%;background:#eaf7fc}.customizer-image img{width:100%;height:100%;min-height:540px;object-fit:cover;display:block}
+.customizer-content{padding:35px 34px 30px}.customizer-content h2,.bag-heading h2{font:600 35px var(--fredoka);margin:8px 0;color:var(--ink)}.customizer-content>p{font-size:11px;color:var(--muted);line-height:1.8}
+.panel-close{border:0;background:#fff;color:var(--ink);font-size:28px;width:38px;height:38px;border-radius:50%;cursor:pointer;box-shadow:0 2px 12px #17334218}
+.customizer-panel>.panel-close{position:absolute;right:14px;top:14px;z-index:2}
+.ingredient-group{border-top:1px solid var(--line);padding:15px 0 10px}.ingredient-group h3{font:600 17px var(--fredoka);margin:0 0 10px}.ingredient-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ingredient-option{display:flex;align-items:center;gap:8px;border:1px solid #e5edf0;border-radius:9px;padding:9px;font-size:10px;color:var(--ink);cursor:pointer}
+.ingredient-option input{accent-color:var(--orange);width:15px;height:15px}.ingredient-option span{flex:1}.ingredient-option small{color:var(--orange);font-weight:700;white-space:nowrap}
+.nutrition-note{font-size:9px;line-height:1.6;color:#829198;padding:9px 0}
+.custom-totals{display:flex;justify-content:space-between;gap:12px;background:#eff9fd;border-radius:12px;padding:14px 16px;margin:8px 0 15px}
+.custom-totals div{display:flex;flex-direction:column;gap:4px}.custom-totals small{font-size:8px;letter-spacing:1px;color:#73848a;font-weight:700}.custom-totals strong{font:600 21px var(--fredoka);color:var(--orange)}
+.add-to-bag{border:0;cursor:pointer;width:100%;justify-content:center}
+.bag-overlay{justify-content:flex-end;padding:0}.bag-panel{height:100%;width:min(440px,100%);background:#fffdfc;padding:28px 25px;display:flex;flex-direction:column;box-shadow:-15px 0 55px #07192333}
+.bag-heading{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:18px}.bag-heading h2{font-size:29px;margin-bottom:0}.bag-heading h2 span{color:var(--orange)}
+.bag-items{flex:1;overflow:auto;padding:15px 0}.bag-empty{text-align:center;color:#829198;font-size:12px;padding:50px 15px}
+.bag-item{border-bottom:1px solid var(--line);padding:13px 0;display:grid;grid-template-columns:1fr auto;gap:8px}.bag-item h3{font:600 17px var(--fredoka);margin:0 0 5px}.bag-item p{font-size:9px;line-height:1.6;color:#829198;margin:0}.bag-item strong{color:var(--orange);font:600 16px var(--fredoka)}
+.bag-item-actions{display:flex;align-items:center;gap:8px;margin-top:9px}.bag-item-actions button{border:1px solid #dce8ec;background:white;border-radius:7px;padding:4px 9px;cursor:pointer;color:var(--ink)}.bag-item-actions .remove-item{color:#d64e36;border:0}
+.bag-footer{border-top:1px solid var(--line);padding-top:16px}.bag-total{display:flex;justify-content:space-between;font-size:13px}.bag-total strong{font:600 23px var(--fredoka);color:var(--orange)}.bag-footer>p{font-size:10px;color:#829198;margin:5px 0 15px}.bag-checkout{border:0;width:100%;justify-content:center;cursor:pointer}.bag-checkout:disabled{opacity:.45;cursor:not-allowed}.bag-footer>small{display:block;text-align:center;font-size:8px;color:#929da2;margin-top:10px}
+body.modal-open{overflow:hidden}
+@media(max-width:700px){.bag-button{padding:9px 11px;font-size:10px}.customizer-panel{display:block;max-height:94vh}.customizer-image{height:170px;min-height:0}.customizer-image img{height:170px;min-height:0}.customizer-content{padding:22px 18px}.customizer-content h2{font-size:29px}.ingredient-options{gap:6px}.ingredient-option{font-size:9px;padding:8px}.ui-overlay{padding:10px}.customizer-panel>.panel-close{top:10px;right:10px}.bag-panel{padding:22px 18px}}
