@@ -228,3 +228,28 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
 @media(prefers-reduced-motion:reduce){
   .hero-photo-wrap,.hero-photo{animation:none!important;transform:none!important;filter:none!important}
 }
+
+
+/* Coqueiro decorativo no fundo do banner principal */
+.hero-visual{isolation:isolate}
+.hero-palm{
+  position:absolute;
+  z-index:-1;
+  width:clamp(175px,24vw,290px);
+  height:auto;
+  object-fit:contain;
+  top:-48px;
+  right:-54px;
+  opacity:.96;
+  pointer-events:none;
+  filter:drop-shadow(0 8px 12px #17334212);
+}
+.hero-photo-wrap{position:relative;z-index:1}
+.hero-visual .photo-sticker,.hero-visual .decor{z-index:2}
+@media(max-width:650px){
+  .hero-palm{
+    width:clamp(145px,46vw,205px);
+    top:-34px;
+    right:-30px;
+  }
+}
