@@ -100,7 +100,7 @@ const cepInput=document.querySelector("#delivery-cep");
 const cepStatus=document.querySelector("#cep-status"); let cepLookupSequence=0;
 const addressFields={street:document.querySelector("#delivery-street"),neighborhood:document.querySelector("#delivery-neighborhood"),cityState:document.querySelector("#delivery-city-state")};
 async function lookupCep(){
- const digits=cepInput.value.replace(/\\D/g,""); if(digits.length!==8)return;
+ const digits=cepInput.value.replace(/\D/g,""); if(digits.length!==8)return;
  const sequence=++cepLookupSequence; cepStatus.textContent="Consultando CEP…";
  try{
   const response=await fetch("https://viacep.com.br/ws/"+digits+"/json/"); if(!response.ok)throw new Error("Falha na consulta");
@@ -112,11 +112,11 @@ async function lookupCep(){
  }catch(error){if(sequence!==cepLookupSequence)return;cepStatus.textContent="Não foi possível localizar esse CEP. Preencha rua, bairro e cidade/UF manualmente.";}
 }
 cepInput.addEventListener("input",()=>{
- const digits=cepInput.value.replace(/\\D/g,"").slice(0,8); cepInput.value=digits.length>5?digits.slice(0,5)+"-"+digits.slice(5):digits;
+ const digits=cepInput.value.replace(/\D/g,"").slice(0,8); cepInput.value=digits.length>5?digits.slice(0,5)+"-"+digits.slice(5):digits;
  if(digits.length===8)lookupCep();else{cepLookupSequence++;cepStatus.textContent="Digite os 8 números do CEP para buscar o endereço; os campos também podem ser preenchidos manualmente.";}
  renderCheckoutSummary();
 });
-document.querySelectorAll("#delivery-address-fields input").forEach(input=>input.addEventListener("input",()=>renderCheckoutSummary()));
+document.querySelectorAll("#delivery-address-fields input, #customer-name, #customer-phone").forEach(input=>input.addEventListener("input",()=>renderCheckoutSummary()));
 const temporaryOrderPhone = "5534991401087";
 const acceptTerms=document.querySelector("#accept-terms");
 const termsError=document.querySelector("#terms-error");
@@ -133,7 +133,7 @@ const changeOptions=document.querySelector("#change-options");
 const changeFor=document.querySelector("#change-for");
 const changeForLabel=document.querySelector("#change-for-label");
 document.querySelectorAll("[data-payment-choice]").forEach(option=>{const radio=option.querySelector('input[type="radio"]');radio.addEventListener("change",()=>{if(!radio.checked)return;paymentMethod.value=radio.value;paymentMethod.dispatchEvent(new Event("change",{bubbles:true}));});});
-paymentMethod.addEventListener("change",()=>{document.querySelectorAll("[data-payment-choice]").forEach(option=>{const radio=option.querySelector('input[type="radio"]');radio.checked=radio.value===paymentMethod.value;});});
+paymentMethod.addEventListener("change",()=>{renderCheckoutSummary();document.querySelectorAll("[data-payment-choice]").forEach(option=>{const radio=option.querySelector('input[type="radio"]');radio.checked=radio.value===paymentMethod.value;});});
 paymentMethod.addEventListener("change",()=>{
  const isCash=paymentMethod.value==="Dinheiro";
  changeOptions.hidden=!isCash;
