@@ -231,7 +231,8 @@ renderCheckoutSummary();
     marketing.checked=!!current?.marketing;
     if(!dialog.open)dialog.showModal();
   };
-  if(!valid)banner.hidden=false;
+  // Exibe o aviso em toda nova visita, mesmo quando já existe uma escolha salva.
+  banner.hidden=false;
   document.querySelector("#cookie-accept-all")?.addEventListener("click",()=>save(true,true));
   document.querySelector("#cookie-reject-optional")?.addEventListener("click",()=>save(false,false));
   document.querySelector("#cookie-customize")?.addEventListener("click",openSettings);
