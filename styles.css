@@ -4,12 +4,12 @@
 
 /* Ajuste fino: logo proporcional e contida no cabeçalho */
 .site-header{height:76px;min-height:76px}
-.site-header .brand{height:100%;display:flex;align-items:center;flex:0 0 auto;max-width:180px;overflow:hidden}
-.site-header .brand-logo{width:auto!important;height:auto!important;max-width:155px!important;max-height:46px!important;object-fit:contain;object-position:left center}
-.site-footer .footer-logo{width:auto!important;height:auto!important;max-width:145px!important;max-height:40px!important;object-fit:contain}
+.site-header .brand{height:100%;display:flex;align-items:center;flex:0 0 auto;max-width:195px;overflow:hidden}
+.site-header .brand-logo{width:auto!important;height:auto!important;max-width:170px!important;max-height:50px!important;object-fit:contain;object-position:left center}
+.site-footer .footer-logo{width:auto!important;height:auto!important;max-width:155px!important;max-height:44px!important;object-fit:contain}
 @media(max-width:650px){
   .site-header{height:68px;min-height:68px}
-  .site-header .brand{max-width:150px}
-  .site-header .brand-logo{max-width:132px!important;max-height:40px!important}
-  .site-footer .footer-logo{max-width:125px!important;max-height:36px!important}
+  .site-header .brand{max-width:162px}
+  .site-header .brand-logo{max-width:145px!important;max-height:43px!important}
+  .site-footer .footer-logo{max-width:135px!important;max-height:39px!important}
 }
