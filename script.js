@@ -1,3 +1,38 @@
+/* Inicializa o aviso de cookies imediatamente, antes dos demais scripts da página. */
+(function initCookieConsent(){
+  const STORAGE_KEY="UAILOHA_COOKIE_CONSENT_V1";
+  const banner=document.getElementById("cookie-consent");
+  const dialog=document.getElementById("cookie-dialog");
+  if(!banner||!dialog)return;
+  const analytics=document.getElementById("cookie-analytics");
+  const marketing=document.getElementById("cookie-marketing");
+  let current=null;
+  try{current=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");}catch(error){}
+  const save=(stats,ads)=>{
+    const consent={version:1,essential:true,analytics:!!stats,marketing:!!ads,updatedAt:new Date().toISOString()};
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(consent));}catch(error){}
+    banner.hidden=true;
+    if(dialog.open)dialog.close();
+    document.dispatchEvent(new CustomEvent("uailoha:cookie-consent-updated",{detail:consent}));
+  };
+  const openSettings=()=>{
+    analytics.checked=!!current?.analytics;
+    marketing.checked=!!current?.marketing;
+    if(!dialog.open)dialog.showModal();
+  };
+  // Sempre solicita a escolha novamente em cada carregamento do site.
+  banner.hidden=false;
+  banner.removeAttribute("hidden");
+  document.getElementById("cookie-accept-all")?.addEventListener("click",()=>save(true,true));
+  document.getElementById("cookie-reject-optional")?.addEventListener("click",()=>save(false,false));
+  document.getElementById("cookie-customize")?.addEventListener("click",openSettings);
+  document.getElementById("open-cookie-settings")?.addEventListener("click",openSettings);
+  document.getElementById("cookie-dialog-close")?.addEventListener("click",()=>dialog.close());
+  document.getElementById("cookie-save-rejected")?.addEventListener("click",()=>save(false,false));
+  document.getElementById("cookie-save-preferences")?.addEventListener("click",()=>save(analytics.checked,marketing.checked));
+  dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close();});
+})();
+
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector(".main-nav");
 
@@ -207,38 +242,4 @@ renderCheckoutSummary();
   });
 })();
 
-/* Consentimento de cookies: categorias opcionais só são autorizadas após escolha */
-(function initCookieConsent(){
-  const STORAGE_KEY="UAILOHA_COOKIE_CONSENT_V1";
-  const banner=document.querySelector("#cookie-consent");
-  const dialog=document.querySelector("#cookie-dialog");
-  if(!banner||!dialog)return;
-  const analytics=document.querySelector("#cookie-analytics");
-  const marketing=document.querySelector("#cookie-marketing");
-  let current=null;
-  try{current=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");}catch(error){current=null;}
-  const valid=current&&current.version===1&&typeof current.analytics==="boolean"&&typeof current.marketing==="boolean";
-  const save=(stats,ads)=>{
-    const consent={version:1,essential:true,analytics:!!stats,marketing:!!ads,updatedAt:new Date().toISOString()};
-    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(consent));}catch(error){}
-    current=consent;
-    banner.hidden=true;
-    if(dialog.open)dialog.close();
-    document.dispatchEvent(new CustomEvent("uailoha:cookie-consent-updated",{detail:consent}));
-  };
-  const openSettings=()=>{
-    analytics.checked=!!current?.analytics;
-    marketing.checked=!!current?.marketing;
-    if(!dialog.open)dialog.showModal();
-  };
-  // Exibe o aviso em toda nova visita, mesmo quando já existe uma escolha salva.
-  banner.hidden=false;
-  document.querySelector("#cookie-accept-all")?.addEventListener("click",()=>save(true,true));
-  document.querySelector("#cookie-reject-optional")?.addEventListener("click",()=>save(false,false));
-  document.querySelector("#cookie-customize")?.addEventListener("click",openSettings);
-  document.querySelector("#open-cookie-settings")?.addEventListener("click",openSettings);
-  document.querySelector("#cookie-dialog-close")?.addEventListener("click",()=>dialog.close());
-  document.querySelector("#cookie-save-rejected")?.addEventListener("click",()=>save(false,false));
-  document.querySelector("#cookie-save-preferences")?.addEventListener("click",()=>save(analytics.checked,marketing.checked));
-  dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close();});
-})();
+
