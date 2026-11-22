@@ -471,3 +471,9 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
       url("https://raw.githubusercontent.com/Alexsandrolima255300/Uailoha-Poke/2a282477a0dcb851713f86bc1cfd7cc16d0e801e/download.jpg");
   }
 }
+
+
+/* Texto descritivo da seção de apresentação na cor azul da marca */
+.intro-copy>p{
+  color:var(--blue);
+}
