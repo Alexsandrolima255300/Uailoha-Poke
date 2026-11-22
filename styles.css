@@ -522,3 +522,23 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
 .bag-panel.checkout-page .bag-footer{
   margin-top:0;
 }
+
+
+/* Correção direta: a área dos pratos deve ter somente a altura do conteúdo */
+.bag-panel.checkout-page #bag-items.bag-items{
+  display:block !important;
+  flex:0 0 auto !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  overflow:visible !important;
+}
+.bag-panel.checkout-page #bag-items .bag-item{
+  margin:0;
+}
+.bag-panel.checkout-page > .bag-footer{
+  flex:0 0 auto !important;
+  margin-top:0 !important;
+}
