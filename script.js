@@ -64,6 +64,16 @@ document.querySelector("#open-bag").addEventListener("click",openBag);document.q
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCustomizer();closeBag();}});
 document.querySelector("#checkout-button").addEventListener("click",()=>{closeBag();document.querySelector("#monte").scrollIntoView({behavior:"smooth",block:"start"});});
 const temporaryOrderPhone = "5534991401087";
+const acceptTerms=document.querySelector("#accept-terms");
+const termsError=document.querySelector("#terms-error");
+const termsDialog=document.querySelector("#terms-dialog");
+const openTerms=document.querySelector("#open-terms");
+const closeTerms=()=>termsDialog.close();
+openTerms.addEventListener("click",event=>{event.preventDefault();termsDialog.showModal();});
+document.querySelector("#close-terms").addEventListener("click",closeTerms);
+document.querySelector("#confirm-terms-close").addEventListener("click",closeTerms);
+acceptTerms.addEventListener("change",()=>{if(acceptTerms.checked)termsError.hidden=true;});
+
 const paymentMethod=document.querySelector("#payment-method");
 const changeOptions=document.querySelector("#change-options");
 const changeFor=document.querySelector("#change-for");
@@ -83,6 +93,7 @@ document.querySelectorAll('input[name="needs-change"]').forEach(option=>option.a
 document.querySelector("#finalize-order").addEventListener("click",()=>{
  if(!bag.length)return;
  if(!paymentMethod.value){alert("Selecione uma forma de pagamento para continuar.");paymentMethod.focus();return;}
+ if(!acceptTerms.checked){termsError.hidden=false;acceptTerms.focus();return;}
  const total=bag.reduce((sum,item)=>sum+item.price,0);
  const isCash=paymentMethod.value==="Dinheiro";
  const needsChange=isCash?document.querySelector('input[name="needs-change"]:checked').value:"Não se aplica";
