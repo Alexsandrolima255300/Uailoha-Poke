@@ -507,3 +507,18 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
       url("https://raw.githubusercontent.com/Alexsandrolima255300/Uailoha-Poke/2a282477a0dcb851713f86bc1cfd7cc16d0e801e/download.jpg");
   }
 }
+
+
+/* Checkout: evita que a lista de pratos estique e crie um vão até o subtotal */
+.bag-panel.checkout-page .bag-items{
+  flex:0 1 auto;
+  min-height:0;
+  padding:0;
+  margin:0;
+}
+.bag-panel.checkout-page .bag-item:last-child{
+  border-bottom:0;
+}
+.bag-panel.checkout-page .bag-footer{
+  margin-top:0;
+}
