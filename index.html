@@ -152,7 +152,34 @@
     <section class="bag-panel checkout-page" role="dialog" aria-modal="true" aria-labelledby="bag-title">
       <div class="checkout-topbar"><button class="checkout-back" id="checkout-back" type="button"><span aria-hidden="true">←</span> Voltar ao site</button><div class="checkout-steps"><span class="step-done">01 <b>Sacola</b></span><i></i><span class="step-current">02 <b>Finalização</b></span></div><span class="checkout-secure">♡ Pedido seguro</span></div><div class="bag-heading"><span class="eyebrow">QUASE LÁ!</span><h2 id="bag-title">Revise seu pedido <span>♡</span></h2><p class="checkout-subtitle">Confira seus pokes, escolha como deseja pagar e envie seu pedido.</p><button class="panel-close" id="close-bag" type="button" aria-label="Fechar sacola">×</button></div>
       <div id="bag-items" class="bag-items"><p class="bag-empty">Sua sacola está vazia. Escolha um poke delicioso!</p></div>
-      <div class="bag-footer"><div class="bag-total"><span>Subtotal</span><strong id="bag-total">R$ 0,00</strong></div><p id="bag-kcal">0 kcal estimadas</p><section class="payment-section" aria-labelledby="payment-title"><h3 id="payment-title">Como deseja pagar?</h3><label class="payment-label" for="payment-method">Forma de pagamento</label><select id="payment-method" class="payment-method-native" required aria-label="Forma de pagamento"><option value="">Selecione uma forma de pagamento</option><option value="PIX">PIX</option><option value="Cartão de débito">Cartão de débito</option><option value="Cartão de crédito">Cartão de crédito</option><option value="Dinheiro">Dinheiro</option><option value="Pagar na entrega (combinar forma de pagamento)">Pagar na entrega</option></select><div class="payment-method-grid" role="radiogroup" aria-label="Escolha a forma de pagamento">
+      <div class="bag-footer"><div class="bag-total"><span>Subtotal</span><strong id="bag-total">R$ 0,00</strong></div><p id="bag-kcal">0 kcal estimadas</p><section class="delivery-section" aria-labelledby="delivery-title">
+<h3 id="delivery-title">Como você quer receber?</h3>
+<div class="delivery-choice" role="radiogroup" aria-label="Escolha entrega ou retirada">
+<label class="delivery-option"><input type="radio" name="delivery-type" value="Entrega"><span><b>Receber em casa</b><small>Entrega com taxa fixa de R$ 15,00</small></span></label>
+<label class="delivery-option"><input type="radio" name="delivery-type" value="Retirada"><span><b>Retirar no local</b><small>Sem taxa de entrega</small></span></label>
+</div>
+<div class="customer-details">
+<h4>Seus dados</h4>
+<div class="checkout-fields">
+<label>Nome completo<input id="customer-name" type="text" autocomplete="name" placeholder="Como podemos chamar você?"></label>
+<label>Telefone / WhatsApp<input id="customer-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(34) 99999-9999"></label>
+</div>
+<div id="delivery-address-fields" class="delivery-address-fields" hidden>
+<h4>Endereço de entrega</h4>
+<div class="checkout-fields address-fields">
+<label>CEP<input id="delivery-cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000"></label>
+<label>Rua / Avenida<input id="delivery-street" type="text" autocomplete="address-line1" placeholder="Nome da rua"></label>
+<label>Número<input id="delivery-number" type="text" inputmode="numeric" placeholder="Nº"></label>
+<label>Bairro<input id="delivery-neighborhood" type="text" autocomplete="address-level3" placeholder="Seu bairro"></label>
+<label class="field-wide">Complemento <small>(opcional)</small><input id="delivery-complement" type="text" autocomplete="address-line2" placeholder="Apartamento, bloco, casa..."></label>
+<label class="field-wide">Ponto de referência <small>(opcional)</small><input id="delivery-reference" type="text" placeholder="Próximo a..."></label>
+</div>
+</div>
+<p class="delivery-hint" id="delivery-hint">Selecione entrega ou retirada para continuar.</p>
+</section>
+<div class="checkout-price-row delivery-fee-row"><span>Taxa de entrega</span><strong id="delivery-fee">Selecione</strong></div>
+<div class="checkout-price-row checkout-grand-total"><span>Total do pedido</span><strong id="checkout-grand-total">R$ 0,00</strong></div>
+<section class="payment-section" aria-labelledby="payment-title"><h3 id="payment-title">Como deseja pagar?</h3><label class="payment-label" for="payment-method">Forma de pagamento</label><select id="payment-method" class="payment-method-native" required aria-label="Forma de pagamento"><option value="">Selecione uma forma de pagamento</option><option value="PIX">PIX</option><option value="Cartão de débito">Cartão de débito</option><option value="Cartão de crédito">Cartão de crédito</option><option value="Dinheiro">Dinheiro</option><option value="Pagar na entrega (combinar forma de pagamento)">Pagar na entrega</option></select><div class="payment-method-grid" role="radiogroup" aria-label="Escolha a forma de pagamento">
 <label class="payment-option" data-payment-choice><input type="radio" name="payment-visual" value="PIX"><span class="payment-icon pix-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M11.2 4.8 4.8 11.2a6.8 6.8 0 0 0 0 9.6l6.4 6.4a6.8 6.8 0 0 0 9.6 0l6.4-6.4a6.8 6.8 0 0 0 0-9.6l-6.4-6.4a6.8 6.8 0 0 0-9.6 0Z" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(45 16 16)"/><path d="m10 16 6-6 6 6-6 6-6-6Z" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="payment-option-copy"><b>Pix</b><small>Pagamento instantâneo</small></span></label>
 <label class="payment-option" data-payment-choice><input type="radio" name="payment-visual" value="Cartão de débito"><span class="payment-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="26" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M3 12h26M8 20h7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="payment-option-copy"><b>Débito</b><small>Cartão de débito</small></span></label>
 <label class="payment-option" data-payment-choice><input type="radio" name="payment-visual" value="Cartão de crédito"><span class="payment-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="26" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M3 12h26M8 20h7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M22 20h2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="payment-option-copy"><b>Crédito</b><small>Cartão de crédito</small></span></label>
