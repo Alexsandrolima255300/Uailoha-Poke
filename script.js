@@ -57,12 +57,30 @@ document.querySelectorAll(".menu-card").forEach((card,index)=>{card.setAttribute
 document.querySelector("[data-close-custom]").addEventListener("click",closeCustomizer);
 customizer.addEventListener("click",e=>{if(e.target===customizer)closeCustomizer();});
 document.querySelector("#add-to-bag").addEventListener("click",()=>{if(!activePoke)return;const t=getTotals();bag.push({id:Date.now()+Math.random(),name:activePoke.name,price:t.price,kcal:t.kcal,ingredients:activeSelections.map(s=>s.name)});closeCustomizer();renderBag();openBag();});
-function renderBag(){const container=document.querySelector("#bag-items");container.innerHTML="";let total=0,kcal=0;bag.forEach(item=>{total+=item.price;kcal+=item.kcal;const row=document.createElement("article");row.className="bag-item";const info=document.createElement("div");const title=document.createElement("h3");title.textContent=item.name;const desc=document.createElement("p");desc.textContent=item.ingredients.join(" · ");const actions=document.createElement("div");actions.className="bag-item-actions";const remove=document.createElement("button");remove.className="remove-item";remove.type="button";remove.textContent="Remover";remove.addEventListener("click",()=>{bag=bag.filter(x=>x.id!==item.id);renderBag();});actions.append(remove);info.append(title,desc,actions);const price=document.createElement("strong");price.textContent=money(item.price);row.append(info,price);container.append(row);});if(!bag.length){container.innerHTML='<p class="bag-empty">Sua sacola está vazia. Escolha um poke delicioso!</p>';}document.querySelector("#bag-total").textContent=money(total);document.querySelector("#bag-kcal").textContent=kcal+" kcal estimadas no total";document.querySelector("#bag-count").textContent=bag.length;document.querySelector("#checkout-button").disabled=!bag.length;document.querySelector("#finalize-order").disabled=!bag.length;}
+function renderBag(){const container=document.querySelector("#bag-items");container.innerHTML="";let total=0,kcal=0;bag.forEach(item=>{total+=item.price;kcal+=item.kcal;const row=document.createElement("article");row.className="bag-item";const info=document.createElement("div");const title=document.createElement("h3");title.textContent=item.name;const desc=document.createElement("p");desc.textContent=item.ingredients.join(" · ");const actions=document.createElement("div");actions.className="bag-item-actions";const remove=document.createElement("button");remove.className="remove-item";remove.type="button";remove.textContent="Remover";remove.addEventListener("click",()=>{bag=bag.filter(x=>x.id!==item.id);renderBag();});actions.append(remove);info.append(title,desc,actions);const price=document.createElement("strong");price.textContent=money(item.price);row.append(info,price);container.append(row);});if(!bag.length){container.innerHTML='<p class="bag-empty">Sua sacola está vazia. Escolha um poke delicioso!</p>';}document.querySelector("#bag-total").textContent=money(total);document.querySelector("#bag-kcal").textContent=kcal+" kcal estimadas no total";updateCheckoutTotals(total);document.querySelector("#bag-count").textContent=bag.length;document.querySelector("#checkout-button").disabled=!bag.length;document.querySelector("#finalize-order").disabled=!bag.length;}
 function openBag(){bagOverlay.classList.add("open");bagOverlay.setAttribute("aria-hidden","false");document.body.classList.add("modal-open","checkout-open");document.querySelector("#checkout-back")?.focus();}
 function closeBag(){bagOverlay.classList.remove("open");bagOverlay.setAttribute("aria-hidden","true");document.body.classList.remove("checkout-open");if(!customizer.classList.contains("open"))document.body.classList.remove("modal-open");}
 document.querySelector("#open-bag").addEventListener("click",openBag);document.querySelector("#close-bag").addEventListener("click",closeBag);document.querySelector("#checkout-back").addEventListener("click",closeBag);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCustomizer();closeBag();}});
 document.querySelector("#checkout-button").addEventListener("click",()=>{closeBag();document.querySelector("#monte").scrollIntoView({behavior:"smooth",block:"start"});});
+const DELIVERY_FEE=15;
+const deliveryFeeLabel=document.querySelector("#delivery-fee");
+const grandTotalLabel=document.querySelector("#checkout-grand-total");
+function selectedDeliveryType(){return document.querySelector('input[name="delivery-type"]:checked')?.value||"";}
+function updateCheckoutTotals(subtotal=bag.reduce((sum,item)=>sum+item.price,0)){
+ const type=selectedDeliveryType();
+ const fee=type==="Entrega"?DELIVERY_FEE:0;
+ deliveryFeeLabel.textContent=type==="Entrega"?money(DELIVERY_FEE):type==="Retirada"?money(0):"Selecione";
+ grandTotalLabel.textContent=money(subtotal+fee);
+}
+document.querySelectorAll('input[name="delivery-type"]').forEach(input=>input.addEventListener("change",()=>{
+ const isDelivery=input.value==="Entrega"&&input.checked;
+ document.querySelector("#delivery-address-fields").hidden=!isDelivery;
+ document.querySelector("#delivery-hint").textContent=isDelivery?"Informe o endereço completo para receber seu pedido.":"Retirada no local: sem taxa de entrega.";
+ updateCheckoutTotals();
+}));
+const cepInput=document.querySelector("#delivery-cep");
+cepInput.addEventListener("input",()=>{const digits=cepInput.value.replace(/\D/g,"").slice(0,8);cepInput.value=digits.length>5?digits.slice(0,5)+"-"+digits.slice(5):digits;});
 const temporaryOrderPhone = "5534991401087";
 const acceptTerms=document.querySelector("#accept-terms");
 const termsError=document.querySelector("#terms-error");
@@ -94,16 +112,36 @@ document.querySelectorAll('input[name="needs-change"]').forEach(option=>option.a
 
 document.querySelector("#finalize-order").addEventListener("click",()=>{
  if(!bag.length)return;
+ const deliveryType=selectedDeliveryType();
+ if(!deliveryType){alert("Escolha entre entrega ou retirada.");document.querySelector(".delivery-section").scrollIntoView({behavior:"smooth",block:"center"});return;}
+ const customerName=document.querySelector("#customer-name").value.trim();
+ const customerPhone=document.querySelector("#customer-phone").value.trim();
+ if(!customerName){alert("Informe seu nome.");document.querySelector("#customer-name").focus();return;}
+ if(customerPhone.replace(/\D/g,"").length<10){alert("Informe um telefone/WhatsApp válido com DDD.");document.querySelector("#customer-phone").focus();return;}
+ const address={cep:document.querySelector("#delivery-cep").value.trim(),street:document.querySelector("#delivery-street").value.trim(),number:document.querySelector("#delivery-number").value.trim(),neighborhood:document.querySelector("#delivery-neighborhood").value.trim(),complement:document.querySelector("#delivery-complement").value.trim(),reference:document.querySelector("#delivery-reference").value.trim()};
+ if(deliveryType==="Entrega"){
+  if(address.cep.replace(/\D/g,"").length!==8){alert("Informe um CEP válido com 8 números.");document.querySelector("#delivery-cep").focus();return;}
+  for(const field of ["street","number","neighborhood"]){if(!address[field]){alert("Preencha rua/avenida, número e bairro para a entrega.");document.querySelector("#delivery-"+field).focus();return;}}
+ }
  if(!paymentMethod.value){alert("Selecione uma forma de pagamento para continuar.");paymentMethod.focus();return;}
  if(!acceptTerms.checked){termsError.hidden=false;acceptTerms.focus();return;}
- const total=bag.reduce((sum,item)=>sum+item.price,0);
+ const subtotal=bag.reduce((sum,item)=>sum+item.price,0);
+ const deliveryFee=deliveryType==="Entrega"?DELIVERY_FEE:0;
+ const total=subtotal+deliveryFee;
  const isCash=paymentMethod.value==="Dinheiro";
  const needsChange=isCash?document.querySelector('input[name="needs-change"]:checked').value:"Não se aplica";
  if(isCash&&needsChange==="Sim"&&(!changeFor.value||Number(changeFor.value)<=0)){alert("Informe o valor para o qual precisa de troco.");changeFor.focus();return;}
  const lines=bag.map((item,index)=>(index+1)+". "+item.name+" — "+money(item.price)+"\n   Itens: "+item.ingredients.join(", "));
  const paymentDetails=["Forma de pagamento: "+paymentMethod.value];
  if(isCash){paymentDetails.push("Precisa de troco: "+needsChange);if(needsChange==="Sim")paymentDetails.push("Troco para: "+money(Number(changeFor.value)));}
- const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",""+lines.join("\n"),"","Subtotal: "+money(total),"",...paymentDetails,"","Pedido enviado pelo site UaiLoha Poke."].join("\n");
+ const orderDetails=["Cliente: "+customerName,"Telefone/WhatsApp: "+customerPhone,"Recebimento: "+deliveryType];
+ if(deliveryType==="Entrega"){
+  orderDetails.push("Endereço: "+address.street+", "+address.number+" — "+address.neighborhood);
+  orderDetails.push("CEP: "+address.cep);
+  if(address.complement)orderDetails.push("Complemento: "+address.complement);
+  if(address.reference)orderDetails.push("Ponto de referência: "+address.reference);
+ }
+ const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",...orderDetails,"",lines.join("\n"),"","Subtotal dos itens: "+money(subtotal),"Taxa de entrega: "+money(deliveryFee),"TOTAL: "+money(total),"",...paymentDetails,"","Pedido enviado pelo site UaiLoha Poke."].join("\n");
  window.open("https://wa.me/"+temporaryOrderPhone+"?text="+encodeURIComponent(message),"_blank","noopener");
 });
 document.querySelector("#finalize-note").textContent="O pedido será encaminhado temporariamente para o WhatsApp (34) 99140-1087. Confira e toque em Enviar no WhatsApp.";
