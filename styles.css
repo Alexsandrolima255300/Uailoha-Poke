@@ -363,3 +363,33 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
   .bag-panel.checkout-page #bag-kcal{margin:-10px 0 0}
   .bag-panel.checkout-page .checkout-order-summary{padding:14px}
 }
+
+/* Aviso e painel de preferências de cookies */
+.cookie-banner[hidden]{display:none!important}
+.cookie-banner{position:fixed;z-index:10050;left:22px;right:22px;bottom:20px;max-width:1080px;margin:0 auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:28px;background:#fff;border:1px solid #dceaf0;border-radius:18px;box-shadow:0 16px 55px #17334230;color:var(--ink)}
+.cookie-banner-copy{max-width:610px}
+.cookie-kicker{font-size:9px;font-weight:700;letter-spacing:1.7px;color:var(--orange)}
+.cookie-banner h2,.cookie-dialog h2{font:600 25px/1.1 var(--fredoka);margin:7px 0;color:var(--ink)}
+.cookie-banner p,.cookie-dialog-content>p{font:400 11px/1.7 var(--poppins);color:var(--muted);margin:0 0 8px}
+.cookie-banner-copy>a{font:600 10px var(--poppins);color:#168bbd;text-decoration:underline}
+.cookie-banner-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;flex:0 0 auto}
+.cookie-button{border:1px solid transparent;border-radius:24px;padding:12px 15px;font:600 10px var(--poppins);cursor:pointer;transition:transform .2s,background .2s}
+.cookie-button:hover{transform:translateY(-2px)}
+.cookie-accept{background:var(--orange);color:white}
+.cookie-reject{background:#fff;color:var(--ink);border-color:#dce5e9}
+.cookie-customize{background:#eaf7fc;color:#147da8;border-color:#ccebf7}
+.cookie-dialog{width:min(92vw,540px);max-width:540px;border:0;border-radius:20px;padding:0;box-shadow:0 20px 70px #17334240;color:var(--ink)}
+.cookie-dialog::backdrop{background:#102b38a8;backdrop-filter:blur(3px)}
+.cookie-dialog-content{position:relative;padding:30px}
+.cookie-dialog h2{font-size:29px;margin:8px 0 12px}
+.cookie-dialog-close{position:absolute;right:17px;top:13px;border:0;background:transparent;color:var(--muted);font-size:28px;cursor:pointer}
+.cookie-category{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font-family:var(--poppins)}
+.cookie-category b,.cookie-category small{display:block}
+.cookie-category b{font-size:12px;color:var(--ink)}
+.cookie-category small{font-size:10px;line-height:1.5;color:var(--muted);margin-top:3px}
+.cookie-category input{width:19px;height:19px;accent-color:var(--orange);flex:0 0 auto}
+.cookie-always-on{font:600 9px var(--poppins);color:#168bbd;white-space:nowrap}
+.cookie-dialog-note{font:400 10px/1.6 var(--poppins);color:var(--muted);background:#f1faff;border-radius:10px;padding:12px;margin:15px 0}
+.cookie-dialog-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:18px}
+.cookie-settings-link{border:0;background:none;padding:0;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;text-decoration:underline}
+@media(max-width:700px){.cookie-banner{left:12px;right:12px;bottom:12px;display:block;padding:19px;border-radius:16px;max-height:78vh;overflow:auto}.cookie-banner h2{font-size:23px}.cookie-banner-actions{display:grid;grid-template-columns:1fr 1fr;margin-top:15px}.cookie-banner-actions .cookie-customize{grid-column:1/-1}.cookie-button{padding:12px 10px}.cookie-dialog-content{padding:25px 20px}.cookie-dialog-actions{display:grid;grid-template-columns:1fr}.cookie-dialog-actions .cookie-button{width:100%}.cookie-settings-link{font-size:8px}}
