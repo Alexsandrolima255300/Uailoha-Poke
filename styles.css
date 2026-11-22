@@ -270,3 +270,96 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
 @media(prefers-reduced-motion:reduce){
   .scroll-reveal{opacity:1;transform:none;transition:none;will-change:auto}
 }
+
+
+/* Finalização ocupa toda a largura, sem concentrar os campos em um cartão lateral */
+.bag-panel.checkout-page{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  min-height:100vh;
+  height:auto;
+  max-height:none;
+  overflow:visible;
+  padding:28px clamp(22px,6vw,92px) 48px;
+  gap:22px;
+  background:#f8fcfd;
+}
+.bag-panel.checkout-page .bag-heading,
+.bag-panel.checkout-page .bag-items,
+.bag-panel.checkout-page .bag-footer{
+  width:100%;
+  max-width:1240px;
+  margin-left:auto;
+  margin-right:auto;
+  box-sizing:border-box;
+}
+.bag-panel.checkout-page .bag-footer{
+  position:static;
+  max-height:none;
+  overflow:visible;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;
+  gap:22px 28px;
+  padding:26px 0 0;
+  margin-top:0;
+  margin-bottom:24px;
+  border:0;
+  border-top:1px solid #dce9ee;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.bag-panel.checkout-page .bag-total,
+.bag-panel.checkout-page #bag-kcal,
+.bag-panel.checkout-page .delivery-section,
+.bag-panel.checkout-page .payment-section,
+.bag-panel.checkout-page .allergen-panel,
+.bag-panel.checkout-page .terms-acceptance,
+.bag-panel.checkout-page #finalize-note{
+  grid-column:1 / -1;
+}
+.bag-panel.checkout-page .bag-total{
+  padding:18px 22px;
+  border-radius:16px;
+  background:#fff;
+  border:1px solid #e2edf1;
+  align-items:center;
+}
+.bag-panel.checkout-page #bag-kcal{margin:-15px 0 0 22px}
+.bag-panel.checkout-page .delivery-section,
+.bag-panel.checkout-page .payment-section{
+  width:100%;
+  box-sizing:border-box;
+}
+.bag-panel.checkout-page .checkout-order-summary{
+  width:100%;
+  box-sizing:border-box;
+  padding:18px 20px;
+}
+.bag-panel.checkout-page .checkout-order-summary p{font-size:11px}
+.bag-panel.checkout-page .delivery-fee-row,
+.bag-panel.checkout-page .checkout-grand-total{
+  align-self:stretch;
+  margin:0;
+  padding:16px 20px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid #e2edf1;
+}
+.bag-panel.checkout-page .checkout-grand-total{border-color:#ffd0b5;background:#fff8f3}
+.bag-panel.checkout-page .allergen-panel{margin:0;max-width:none}
+.bag-panel.checkout-page .terms-acceptance{margin:0}
+.bag-panel.checkout-page .bag-checkout,
+.bag-panel.checkout-page .finalize-order{width:100%;justify-content:center}
+.bag-panel.checkout-page #finalize-note{text-align:center}
+@media(max-width:650px){
+  .bag-panel.checkout-page{padding:0 18px 30px;gap:12px}
+  .bag-panel.checkout-page .bag-footer{display:flex;flex-direction:column;gap:16px;padding:18px 0;margin-bottom:20px}
+  .bag-panel.checkout-page .bag-total,
+  .bag-panel.checkout-page .delivery-fee-row,
+  .bag-panel.checkout-page .checkout-grand-total{width:100%;box-sizing:border-box}
+  .bag-panel.checkout-page #bag-kcal{margin:-10px 0 0}
+  .bag-panel.checkout-page .checkout-order-summary{padding:14px}
+}
