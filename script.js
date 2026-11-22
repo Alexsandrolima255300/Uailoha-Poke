@@ -57,7 +57,7 @@ document.querySelectorAll(".menu-card").forEach((card,index)=>{card.setAttribute
 document.querySelector("[data-close-custom]").addEventListener("click",closeCustomizer);
 customizer.addEventListener("click",e=>{if(e.target===customizer)closeCustomizer();});
 document.querySelector("#add-to-bag").addEventListener("click",()=>{if(!activePoke)return;const t=getTotals();bag.push({id:Date.now()+Math.random(),name:activePoke.name,price:t.price,kcal:t.kcal,ingredients:activeSelections.map(s=>s.name)});closeCustomizer();renderBag();openBag();});
-function renderBag(){const container=document.querySelector("#bag-items");container.innerHTML="";let total=0,kcal=0;bag.forEach(item=>{total+=item.price;kcal+=item.kcal;const row=document.createElement("article");row.className="bag-item";const info=document.createElement("div");const title=document.createElement("h3");title.textContent=item.name;const desc=document.createElement("p");desc.textContent=item.ingredients.join(" · ");const actions=document.createElement("div");actions.className="bag-item-actions";const remove=document.createElement("button");remove.className="remove-item";remove.type="button";remove.textContent="Remover";remove.addEventListener("click",()=>{bag=bag.filter(x=>x.id!==item.id);renderBag();});actions.append(remove);info.append(title,desc,actions);const price=document.createElement("strong");price.textContent=money(item.price);row.append(info,price);container.append(row);});if(!bag.length){container.innerHTML='<p class="bag-empty">Sua sacola está vazia. Escolha um poke delicioso!</p>';}document.querySelector("#bag-total").textContent=money(total);document.querySelector("#bag-kcal").textContent=kcal+" kcal estimadas no total";updateCheckoutTotals(total);document.querySelector("#bag-count").textContent=bag.length;document.querySelector("#checkout-button").disabled=!bag.length;document.querySelector("#finalize-order").disabled=!bag.length;}
+function renderBag(){const container=document.querySelector("#bag-items");container.innerHTML="";let total=0,kcal=0;bag.forEach(item=>{total+=item.price;kcal+=item.kcal;const row=document.createElement("article");row.className="bag-item";const info=document.createElement("div");const title=document.createElement("h3");title.textContent=item.name;const desc=document.createElement("p");desc.textContent=item.ingredients.join(" · ");const actions=document.createElement("div");actions.className="bag-item-actions";const remove=document.createElement("button");remove.className="remove-item";remove.type="button";remove.textContent="Remover";remove.addEventListener("click",()=>{bag=bag.filter(x=>x.id!==item.id);renderBag();});actions.append(remove);info.append(title,desc,actions);const price=document.createElement("strong");price.textContent=money(item.price);row.append(info,price);container.append(row);});if(!bag.length){container.innerHTML='<p class="bag-empty">Sua sacola está vazia. Escolha um poke delicioso!</p>';}document.querySelector("#bag-total").textContent=money(total);document.querySelector("#bag-kcal").textContent=kcal+" kcal estimadas no total";updateCheckoutTotals(total);renderCheckoutSummary(total);document.querySelector("#bag-count").textContent=bag.length;document.querySelector("#checkout-button").disabled=!bag.length;document.querySelector("#finalize-order").disabled=!bag.length;}
 function openBag(){bagOverlay.classList.add("open");bagOverlay.setAttribute("aria-hidden","false");document.body.classList.add("modal-open","checkout-open");document.querySelector("#checkout-back")?.focus();}
 function closeBag(){bagOverlay.classList.remove("open");bagOverlay.setAttribute("aria-hidden","true");document.body.classList.remove("checkout-open");if(!customizer.classList.contains("open"))document.body.classList.remove("modal-open");}
 document.querySelector("#open-bag").addEventListener("click",openBag);document.querySelector("#close-bag").addEventListener("click",closeBag);document.querySelector("#checkout-back").addEventListener("click",closeBag);
@@ -72,6 +72,23 @@ function updateCheckoutTotals(subtotal=bag.reduce((sum,item)=>sum+item.price,0))
  const fee=type==="Entrega"?DELIVERY_FEE:0;
  deliveryFeeLabel.textContent=type==="Entrega"?money(DELIVERY_FEE):type==="Retirada"?money(0):"Selecione";
  grandTotalLabel.textContent=money(subtotal+fee);
+ renderCheckoutSummary(subtotal);
+}
+function renderCheckoutSummary(subtotal=bag.reduce((sum,item)=>sum+item.price,0)){
+ const target=document.querySelector("#checkout-order-summary"); if(!target)return;
+ const type=selectedDeliveryType(), fee=type==="Entrega"?DELIVERY_FEE:0;
+ const value=id=>document.querySelector(id)?.value.trim()||"";
+ const rows=bag.map((item,index)=>(index+1)+". "+item.name+" — "+money(item.price));
+ let receiving=type||"Não selecionado";
+ if(type==="Retirada")receiving+=" — R. Afonso Rato, 146, Mercês, Uberaba/MG";
+ if(type==="Entrega"){
+  const address=[value("#delivery-street"),value("#delivery-number"),value("#delivery-neighborhood"),value("#delivery-city-state"),value("#delivery-cep")].filter(Boolean).join(", ");
+  receiving+=" — "+(address||"Endereço ainda não informado");
+  if(value("#delivery-complement"))receiving+=" · "+value("#delivery-complement");
+  if(value("#delivery-reference"))receiving+=" · Referência: "+value("#delivery-reference");
+ }
+ const payment=document.querySelector("#payment-method")?.value||"Não selecionado";
+ target.querySelector("p").textContent="Itens: "+(rows.join(" | ")||"Sacola vazia")+".\nRecebimento: "+receiving+".\nPagamento: "+payment+".\nSubtotal: "+money(subtotal)+" | Taxa: "+(type?money(fee):"A definir")+" | Total: "+(type?money(subtotal+fee):"A definir");
 }
 document.querySelectorAll('input[name="delivery-type"]').forEach(input=>input.addEventListener("change",()=>{
  const isDelivery=input.value==="Entrega"&&input.checked;
@@ -80,7 +97,26 @@ document.querySelectorAll('input[name="delivery-type"]').forEach(input=>input.ad
  updateCheckoutTotals();
 }));
 const cepInput=document.querySelector("#delivery-cep");
-cepInput.addEventListener("input",()=>{const digits=cepInput.value.replace(/\D/g,"").slice(0,8);cepInput.value=digits.length>5?digits.slice(0,5)+"-"+digits.slice(5):digits;});
+const cepStatus=document.querySelector("#cep-status"); let cepLookupSequence=0;
+const addressFields={street:document.querySelector("#delivery-street"),neighborhood:document.querySelector("#delivery-neighborhood"),cityState:document.querySelector("#delivery-city-state")};
+async function lookupCep(){
+ const digits=cepInput.value.replace(/\\D/g,""); if(digits.length!==8)return;
+ const sequence=++cepLookupSequence; cepStatus.textContent="Consultando CEP…";
+ try{
+  const response=await fetch("https://viacep.com.br/ws/"+digits+"/json/"); if(!response.ok)throw new Error("Falha na consulta");
+  const data=await response.json(); if(sequence!==cepLookupSequence)return; if(data.erro)throw new Error("CEP não encontrado");
+  if(data.logradouro)addressFields.street.value=data.logradouro;
+  if(data.bairro)addressFields.neighborhood.value=data.bairro;
+  const cityState=[data.localidade,data.uf].filter(Boolean).join(" / "); if(cityState)addressFields.cityState.value=cityState;
+  cepStatus.textContent="Endereço localizado. Confira os dados e complete manualmente o que estiver faltando."; renderCheckoutSummary();
+ }catch(error){if(sequence!==cepLookupSequence)return;cepStatus.textContent="Não foi possível localizar esse CEP. Preencha rua, bairro e cidade/UF manualmente.";}
+}
+cepInput.addEventListener("input",()=>{
+ const digits=cepInput.value.replace(/\\D/g,"").slice(0,8); cepInput.value=digits.length>5?digits.slice(0,5)+"-"+digits.slice(5):digits;
+ if(digits.length===8)lookupCep();else{cepLookupSequence++;cepStatus.textContent="Digite os 8 números do CEP para buscar o endereço; os campos também podem ser preenchidos manualmente.";}
+ renderCheckoutSummary();
+});
+document.querySelectorAll("#delivery-address-fields input").forEach(input=>input.addEventListener("input",()=>renderCheckoutSummary()));
 const temporaryOrderPhone = "5534991401087";
 const acceptTerms=document.querySelector("#accept-terms");
 const termsError=document.querySelector("#terms-error");
@@ -118,10 +154,10 @@ document.querySelector("#finalize-order").addEventListener("click",()=>{
  const customerPhone=document.querySelector("#customer-phone").value.trim();
  if(!customerName){alert("Informe seu nome.");document.querySelector("#customer-name").focus();return;}
  if(customerPhone.replace(/\D/g,"").length<10){alert("Informe um telefone/WhatsApp válido com DDD.");document.querySelector("#customer-phone").focus();return;}
- const address={cep:document.querySelector("#delivery-cep").value.trim(),street:document.querySelector("#delivery-street").value.trim(),number:document.querySelector("#delivery-number").value.trim(),neighborhood:document.querySelector("#delivery-neighborhood").value.trim(),complement:document.querySelector("#delivery-complement").value.trim(),reference:document.querySelector("#delivery-reference").value.trim()};
+ const address={cep:document.querySelector("#delivery-cep").value.trim(),street:document.querySelector("#delivery-street").value.trim(),number:document.querySelector("#delivery-number").value.trim(),neighborhood:document.querySelector("#delivery-neighborhood").value.trim(),cityState:document.querySelector("#delivery-city-state").value.trim(),complement:document.querySelector("#delivery-complement").value.trim(),reference:document.querySelector("#delivery-reference").value.trim()};
  if(deliveryType==="Entrega"){
   if(address.cep.replace(/\D/g,"").length!==8){alert("Informe um CEP válido com 8 números.");document.querySelector("#delivery-cep").focus();return;}
-  for(const field of ["street","number","neighborhood"]){if(!address[field]){alert("Preencha rua/avenida, número e bairro para a entrega.");document.querySelector("#delivery-"+field).focus();return;}}
+  for(const field of ["street","number","neighborhood","cityState"]){if(!address[field]){alert("Preencha rua/avenida, número, bairro e cidade/UF para a entrega.");document.querySelector(field==="cityState"?"#delivery-city-state":"#delivery-"+field).focus();return;}}
  }
  if(!paymentMethod.value){alert("Selecione uma forma de pagamento para continuar.");paymentMethod.focus();return;}
  if(!acceptTerms.checked){termsError.hidden=false;acceptTerms.focus();return;}
@@ -136,12 +172,13 @@ document.querySelector("#finalize-order").addEventListener("click",()=>{
  if(isCash){paymentDetails.push("Precisa de troco: "+needsChange);if(needsChange==="Sim")paymentDetails.push("Troco para: "+money(Number(changeFor.value)));}
  const orderDetails=["Cliente: "+customerName,"Telefone/WhatsApp: "+customerPhone,"Recebimento: "+deliveryType];
  if(deliveryType==="Entrega"){
-  orderDetails.push("Endereço: "+address.street+", "+address.number+" — "+address.neighborhood);
+  orderDetails.push("Endereço: "+address.street+", "+address.number+" — "+address.neighborhood+", "+address.cityState);
   orderDetails.push("CEP: "+address.cep);
   if(address.complement)orderDetails.push("Complemento: "+address.complement);
   if(address.reference)orderDetails.push("Ponto de referência: "+address.reference);
  }
- const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",...orderDetails,"",lines.join("\n"),"","Subtotal dos itens: "+money(subtotal),"Taxa de entrega: "+money(deliveryFee),"TOTAL: "+money(total),"",...paymentDetails,"","Pedido enviado pelo site UaiLoha Poke."].join("\n");
+ const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",...orderDetails,"",lines.join("\n"),"","RESUMO COMPLETO DO PEDIDO","Subtotal dos itens: "+money(subtotal),"Recebimento: "+deliveryType,"Taxa de entrega: "+money(deliveryFee),"TOTAL: "+money(total),"",...paymentDetails,"","Pedido enviado pelo site UaiLoha Poke."].join("\n");
  window.open("https://wa.me/"+temporaryOrderPhone+"?text="+encodeURIComponent(message),"_blank","noopener");
 });
 document.querySelector("#finalize-note").textContent="O pedido será encaminhado temporariamente para o WhatsApp (34) 99140-1087. Confira e toque em Enviar no WhatsApp.";
+renderCheckoutSummary();
