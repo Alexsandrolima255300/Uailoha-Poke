@@ -66,9 +66,9 @@ document.querySelector("#checkout-button").addEventListener("click",()=>{closeBa
 const temporaryOrderPhone = "5534991401087";
 document.querySelector("#finalize-order").addEventListener("click",()=>{
  if(!bag.length)return;
- const lines=bag.map((item,index)=>`${index+1}. ${item.name} — ${money(item.price)}\\n   Itens: ${item.ingredients.join(", ")}`);
+ const lines=bag.map((item,index)=>`${index+1}. ${item.name} — ${money(item.price)}\n   Itens: ${item.ingredients.join(", ")}`);
  const total=bag.reduce((sum,item)=>sum+item.price,0);
- const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",""+lines.join("\\n"),"","Subtotal: "+money(total),"Pedido enviado pelo site UaiLoha Poke."].join("\\n");
+ const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",""+lines.join("\n"),"","Subtotal: "+money(total),"Pedido enviado pelo site UaiLoha Poke."].join("\n");
  window.open("https://wa.me/"+temporaryOrderPhone+"?text="+encodeURIComponent(message),"_blank","noopener");
 });
 document.querySelector("#finalize-note").textContent="O pedido será encaminhado temporariamente para o WhatsApp (34) 99140-1087. Confira e toque em Enviar no WhatsApp.";
