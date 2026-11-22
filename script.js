@@ -78,6 +78,8 @@ const paymentMethod=document.querySelector("#payment-method");
 const changeOptions=document.querySelector("#change-options");
 const changeFor=document.querySelector("#change-for");
 const changeForLabel=document.querySelector("#change-for-label");
+document.querySelectorAll("[data-payment-choice]").forEach(option=>{const radio=option.querySelector('input[type="radio"]');radio.addEventListener("change",()=>{if(!radio.checked)return;paymentMethod.value=radio.value;paymentMethod.dispatchEvent(new Event("change",{bubbles:true}));});});
+paymentMethod.addEventListener("change",()=>{document.querySelectorAll("[data-payment-choice]").forEach(option=>{const radio=option.querySelector('input[type="radio"]');radio.checked=radio.value===paymentMethod.value;});});
 paymentMethod.addEventListener("change",()=>{
  const isCash=paymentMethod.value==="Dinheiro";
  changeOptions.hidden=!isCash;
