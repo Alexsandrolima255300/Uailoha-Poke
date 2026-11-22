@@ -85,3 +85,13 @@ body.modal-open{overflow:hidden}
 .finalize-order{width:100%;justify-content:center;margin-top:10px;border:0;cursor:pointer}
 .finalize-order:disabled{opacity:.45;cursor:not-allowed}
 @media(max-width:650px){.trust-summary{grid-template-columns:1fr;padding:22px 16px;gap:22px}.trust-facts{gap:7px}.trust-facts div{padding-left:9px}.trust-facts b{font-size:14px}.trust-facts span{font-size:8px}.review-grid{grid-template-columns:1fr}.review-grid blockquote{font-size:12px}.store-details{grid-template-columns:1fr;padding:23px 19px}.store-contact .button{width:100%;justify-content:center}}
+
+/* Seleção de pagamento e troco na sacola */
+.payment-section{padding:15px 0 12px;border-top:1px solid var(--line);margin-top:12px}
+.payment-section h3{font:600 18px var(--fredoka);margin:0 0 10px}
+.payment-label{display:block;font-size:10px;font-weight:600;color:var(--ink);margin:9px 0 6px}
+.payment-section select,.payment-section input[type="number"]{width:100%;padding:11px 12px;border:1px solid #dce8ec;border-radius:9px;background:#fff;color:var(--ink);font:500 10px var(--poppins);outline-color:var(--blue)}
+.change-options{padding:9px 11px;margin-top:10px;background:#f0faff;border-radius:10px}
+.change-choice{display:flex;gap:20px}
+.change-choice label{font-size:10px;display:flex;align-items:center;gap:6px}
+.change-choice input{accent-color:var(--orange)}
