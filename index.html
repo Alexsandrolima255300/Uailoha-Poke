@@ -167,11 +167,38 @@
   <footer class="site-footer">
     <a class="brand footer-brand" href="#inicio"><img class="brand-logo footer-logo" src="WhatsApp_Image_2026-11-22_at_13.53.30-removebg-preview.png" alt="Uailoha Poke" /></a>
     <span>FRESCOR EM CADA CAMADA. <b>♡</b></span>
-    <div class="footer-legal"><a href="politica-de-privacidade.html">Política de Privacidade</a><a href="termos-de-uso.html">Termos de Uso</a></div>
+    <div class="footer-legal"><a href="politica-de-privacidade.html">Política de Privacidade</a><a href="termos-de-uso.html">Termos de Uso</a><button class="cookie-settings-link" id="open-cookie-settings" type="button">Preferências de cookies</button></div>
     <span>© <span id="year"></span> Uailoha Poke</span>
   </footer>
 
-  <div class="ui-overlay" id="customizer" aria-hidden="true">
+
+  <section class="cookie-banner" id="cookie-consent" aria-label="Preferências de cookies" hidden>
+    <div class="cookie-banner-copy">
+      <span class="cookie-kicker">SUA PRIVACIDADE IMPORTA</span>
+      <h2>Podemos usar cookies?</h2>
+      <p>Usamos recursos essenciais para o site funcionar. Com sua autorização, também poderemos usar cookies opcionais de estatística e marketing. Você pode mudar sua escolha quando quiser.</p>
+      <a href="politica-de-privacidade.html#cookies">Saiba mais na Política de Privacidade</a>
+    </div>
+    <div class="cookie-banner-actions">
+      <button class="cookie-button cookie-accept" id="cookie-accept-all" type="button">Aceitar todos</button>
+      <button class="cookie-button cookie-reject" id="cookie-reject-optional" type="button">Recusar opcionais</button>
+      <button class="cookie-button cookie-customize" id="cookie-customize" type="button">Personalizar</button>
+    </div>
+  </section>
+  <dialog class="cookie-dialog" id="cookie-dialog" aria-labelledby="cookie-dialog-title">
+    <div class="cookie-dialog-content">
+      <button class="cookie-dialog-close" id="cookie-dialog-close" type="button" aria-label="Fechar">×</button>
+      <span class="cookie-kicker">CONTROLE SUAS ESCOLHAS</span>
+      <h2 id="cookie-dialog-title">Preferências de cookies</h2>
+      <p>Os cookies essenciais são necessários para o funcionamento básico do site e não podem ser desativados por este painel. As categorias opcionais ficam desligadas até que você autorize.</p>
+      <div class="cookie-category"><div><b>Essenciais</b><small>Funcionamento e segurança do site. Sempre ativos.</small></div><span class="cookie-always-on">Sempre ativos</span></div>
+      <label class="cookie-category" for="cookie-analytics"><span><b>Estatística</b><small>Ajuda a entender o uso do site para melhorar a experiência.</small></span><input id="cookie-analytics" type="checkbox"></label>
+      <label class="cookie-category" for="cookie-marketing"><span><b>Marketing</b><small>Permite tecnologias para medir campanhas e personalizar publicidade.</small></span><input id="cookie-marketing" type="checkbox"></label>
+      <p class="cookie-dialog-note">No momento, o site não tem ferramentas próprias de analytics ou publicidade configuradas. Sua escolha será salva e deverá ser respeitada caso esses recursos sejam adicionados futuramente.</p>
+      <div class="cookie-dialog-actions"><button class="cookie-button cookie-reject" id="cookie-save-rejected" type="button">Recusar opcionais</button><button class="cookie-button cookie-accept" id="cookie-save-preferences" type="button">Salvar preferências</button></div>
+    </div>
+  </dialog>
+\n  <div class="ui-overlay" id="customizer" aria-hidden="true">
     <section class="customizer-panel" role="dialog" aria-modal="true" aria-labelledby="custom-title">
       <button class="panel-close" type="button" data-close-custom aria-label="Fechar">×</button>
       <div class="customizer-image"><img id="custom-image" src="" alt=""></div>
