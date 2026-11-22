@@ -169,3 +169,22 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
 .payment-option-copy small{font:400 8px var(--poppins);color:var(--muted);line-height:1.35}
 .payment-option-delivery{grid-column:1/-1;min-height:58px}
 @media(max-width:650px){.payment-method-grid{gap:7px}.payment-option{min-height:61px;padding:8px;gap:8px}.payment-icon{width:31px;height:31px;flex-basis:31px}.payment-option-copy b{font-size:10px}.payment-option-copy small{font-size:7px}}
+
+
+/* Entrega, retirada e identificação do cliente no checkout */
+.delivery-section{margin:18px 0 20px;padding:17px 0;border-top:1px solid #e7eff2;border-bottom:1px solid #e7eff2}
+.delivery-section h3{font:600 19px var(--fredoka);margin:0 0 12px;color:var(--ink)}
+.delivery-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.delivery-option{display:flex;align-items:flex-start;gap:9px;padding:12px;border:1px solid #e1ebef;border-radius:11px;background:#fff;cursor:pointer}
+.delivery-option:has(input:checked){border-color:var(--blue);background:#eef9fd;box-shadow:0 0 0 2px #26a9e115}
+.delivery-option input{margin:3px 0 0;accent-color:var(--blue)}
+.delivery-option span{display:flex;flex-direction:column;gap:4px}.delivery-option b{font:600 10px var(--poppins)}.delivery-option small{font:400 8px/1.5 var(--poppins);color:var(--muted)}
+.customer-details{margin-top:16px}.customer-details h4{font:600 13px var(--poppins);margin:0 0 10px}.checkout-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.checkout-fields label{display:flex;flex-direction:column;gap:5px;font:500 9px var(--poppins);color:var(--ink)}.checkout-fields label small{display:inline;color:var(--muted);font-weight:400}
+.checkout-fields input{width:100%;min-width:0;border:1px solid #dfe9ed;border-radius:8px;padding:10px 11px;font:400 10px var(--poppins);color:var(--ink);background:#fff;outline:none}
+.checkout-fields input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #26a9e11a}
+.delivery-address-fields{margin-top:15px}.address-fields .field-wide{grid-column:1/-1}
+.delivery-hint{font:400 9px/1.6 var(--poppins);color:var(--muted);margin:10px 0 0}
+.checkout-price-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font:500 10px var(--poppins);padding:7px 0;color:var(--muted)}.checkout-price-row strong{color:var(--ink);font-weight:600}
+.checkout-grand-total{border-top:1px solid #e7eff2;margin-top:5px;padding:12px 0 3px;color:var(--ink);font-size:12px}.checkout-grand-total strong{font:600 22px var(--fredoka);color:var(--orange)}
+@media(max-width:650px){.delivery-choice{grid-template-columns:1fr 1fr}.checkout-fields{grid-template-columns:1fr 1fr}.checkout-fields input{padding:10px 8px;font-size:9px}.delivery-option{padding:10px 8px}.delivery-option b{font-size:9px}.delivery-option small{font-size:7px}}
