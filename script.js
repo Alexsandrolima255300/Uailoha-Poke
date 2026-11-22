@@ -64,11 +64,33 @@ document.querySelector("#open-bag").addEventListener("click",openBag);document.q
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCustomizer();closeBag();}});
 document.querySelector("#checkout-button").addEventListener("click",()=>{closeBag();document.querySelector("#monte").scrollIntoView({behavior:"smooth",block:"start"});});
 const temporaryOrderPhone = "5534991401087";
+const paymentMethod=document.querySelector("#payment-method");
+const changeOptions=document.querySelector("#change-options");
+const changeFor=document.querySelector("#change-for");
+const changeForLabel=document.querySelector("#change-for-label");
+paymentMethod.addEventListener("change",()=>{
+ const isCash=paymentMethod.value==="Dinheiro";
+ changeOptions.hidden=!isCash;
+ if(!isCash){changeFor.value="";changeFor.hidden=true;changeForLabel.hidden=true;}
+});
+document.querySelectorAll('input[name="needs-change"]').forEach(option=>option.addEventListener("change",()=>{
+ const needs=option.checked&&option.value==="Sim";
+ changeFor.hidden=!needs;changeForLabel.hidden=!needs;
+ if(!needs)changeFor.value="";
+}));
+
+
 document.querySelector("#finalize-order").addEventListener("click",()=>{
  if(!bag.length)return;
- const lines=bag.map((item,index)=>`${index+1}. ${item.name} — ${money(item.price)}\n   Itens: ${item.ingredients.join(", ")}`);
+ if(!paymentMethod.value){alert("Selecione uma forma de pagamento para continuar.");paymentMethod.focus();return;}
  const total=bag.reduce((sum,item)=>sum+item.price,0);
- const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",""+lines.join("\n"),"","Subtotal: "+money(total),"Pedido enviado pelo site UaiLoha Poke."].join("\n");
+ const isCash=paymentMethod.value==="Dinheiro";
+ const needsChange=isCash?document.querySelector('input[name="needs-change"]:checked').value:"Não se aplica";
+ if(isCash&&needsChange==="Sim"&&(!changeFor.value||Number(changeFor.value)<=0)){alert("Informe o valor para o qual precisa de troco.");changeFor.focus();return;}
+ const lines=bag.map((item,index)=>(index+1)+". "+item.name+" — "+money(item.price)+"\n   Itens: "+item.ingredients.join(", "));
+ const paymentDetails=["Forma de pagamento: "+paymentMethod.value];
+ if(isCash){paymentDetails.push("Precisa de troco: "+needsChange);if(needsChange==="Sim")paymentDetails.push("Troco para: "+money(Number(changeFor.value)));}
+ const message=["Olá! Quero fazer um pedido na UaiLoha Poke 😊","",""+lines.join("\n"),"","Subtotal: "+money(total),"",...paymentDetails,"","Pedido enviado pelo site UaiLoha Poke."].join("\n");
  window.open("https://wa.me/"+temporaryOrderPhone+"?text="+encodeURIComponent(message),"_blank","noopener");
 });
 document.querySelector("#finalize-note").textContent="O pedido será encaminhado temporariamente para o WhatsApp (34) 99140-1087. Confira e toque em Enviar no WhatsApp.";
