@@ -425,3 +425,30 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
   }
   .intro-copy{padding:12px 0}
 }
+
+
+/* Seção de apresentação com foto de fundo */
+.intro{
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:520px;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    linear-gradient(90deg,rgba(20,28,25,.78) 0%,rgba(20,28,25,.58) 52%,rgba(20,28,25,.22) 100%),
+    url("https://raw.githubusercontent.com/Alexsandrolima255300/Uailoha-Poke/2a282477a0dcb851713f86bc1cfd7cc16d0e801e/download.jpg") center 52%/cover no-repeat;
+}
+.intro-art{display:none}
+.intro-copy{position:relative;z-index:1;max-width:680px}
+.intro-copy .eyebrow{color:#fff}
+.intro-copy h2{color:#fff}
+.intro-copy h2 em{color:#ffd36a}
+.intro-copy>p{color:rgba(255,255,255,.92);max-width:590px}
+.intro-copy .orange-link{color:#ffd36a}
+.intro-copy .orange-link span{color:#ffd36a}
+@media(max-width:700px){
+  .intro{min-height:470px;padding:78px 8%;background-position:center;background-image:linear-gradient(90deg,rgba(20,28,25,.76),rgba(20,28,25,.48)),url("https://raw.githubusercontent.com/Alexsandrolima255300/Uailoha-Poke/2a282477a0dcb851713f86bc1cfd7cc16d0e801e/download.jpg")}
+  .intro-copy h2{font-size:clamp(36px,10vw,48px)}
+  .intro-copy>p{font-size:13px;line-height:1.9}
+}
