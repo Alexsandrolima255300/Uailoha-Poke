@@ -566,3 +566,9 @@ body.checkout-open>.announcement,body.checkout-open>.site-header,body.checkout-o
     background-size:cover,380px auto !important;
   }
 }
+
+
+/* Saudação da seção Nossa vibe em preto */
+.intro-copy > .eyebrow{
+  color:#000 !important;
+}
